@@ -1,13 +1,16 @@
 'use client'
 import { ItemCart } from '@/components'
-import { useHome } from './useHome'
+import { useMyPurchase } from './useMyPurchase'
 import { ethers } from 'ethers'
 
-export default function Home() {
-  const { items, buyMarketItem } = useHome()
+export default function MyPurchasePage() {
+  const { items } = useMyPurchase()
 
   return (
-    <div className="w-full">
+    <div className="w-full space-y-5">
+      <div className="text-center text-3xl uppercase font-bold">
+        My purchase
+      </div>
       {items.length === 0 && (
         <div className="text-2xl text-center">No NFT available</div>
       )}
@@ -17,11 +20,9 @@ export default function Home() {
             <ItemCart
               key={index}
               imageUrl={o.image}
-              price={Number(ethers.formatEther(o.totalPrice))}
+              price={Number(ethers.formatEther(o.price))}
               desc={o.name}
-              onBuy={() => {
-                buyMarketItem(o.itemId, o.totalPrice)
-              }}
+              isSold
             />
           )
         })}
